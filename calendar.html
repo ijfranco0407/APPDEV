@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FullCalendar Example</title>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css' rel='stylesheet' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.js'></script>
+</head>
+<body>
+
+<div id='calendar'></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: [
+                {
+                    title: 'Event 1',
+                    start: '2024-04-01'
+                },
+                {
+                    title: 'Event 2',
+                    start: '2024-04-05',
+                    end: '2024-04-07'
+                },
+                {
+                    title: 'Event 3',
+                    start: '2024-04-15'
+                }
+                // Add more events here if needed
+            ]
+        });
+
+        calendar.render();
+    });
+</script>
+
+</body>
+</html>

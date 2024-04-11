@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="signin.css">
+</head>
+<body>
+
+<div class="signin-box">
+    <h2>Sign In</h2>
+    <form>
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username">
+        </div>
+        <div class="input-group password-input">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password">
+            <span class="show-password" onclick="togglePassword()">&#128065;</span>
+        </div>
+        <button type="submit">Sign In</button>
+    </form>
+</div>
+
+<script>
+    function togglePassword() {
+        var passwordField = document.getElementById("password");
+        var showPasswordIcon = document.querySelector(".show-password");
+        
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            showPasswordIcon.innerHTML = "&#128064;";
+        } else {
+            passwordField.type = "password";
+            showPasswordIcon.innerHTML = "&#128065;";
+        }
+    }
+</script>
+
+</body>
+</html>
