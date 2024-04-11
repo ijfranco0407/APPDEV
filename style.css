@@ -57,3 +57,7 @@ h3{
     margin: auto;
     padding: 5px;
 }
+a{
+    color: #333;
+    text-decoration: none;
+}
