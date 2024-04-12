@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .appointment-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .appointment-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .delete-button {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #cc0000;
+        }
+
+        .add-appointment-form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="datetime-local"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin</h2>
+
+    <h3>Existing Appointments:</h3>
+    <ul class="appointment-list" id="appointmentList">
+        <!-- Existing appointments will be dynamically added here -->
+    </ul>
+
+    <h3>Add New Appointment:</h3>
+    <form class="add-appointment-form" onsubmit="addAppointment(event)">
+        <div class="form-group">
+            <label for="appointmentName">Appointment Name:</label>
+            <input type="text" id="appointmentName" name="appointmentName" required>
+        </div>
+        <div class="form-group">
+            <label for="appointmentDateTime">Appointment Date and Time:</label>
+            <input type="datetime-local" id="appointmentDateTime" name="appointmentDateTime" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Add Appointment">
+        </div>
+    </form>
+</div>
+
+<script>
+    var appointments = [
+       
+    ];
+
+    // Function to display existing appointments
+    function displayAppointments() {
+        var appointmentList = document.getElementById('appointmentList');
+        appointmentList.innerHTML = '';
+        appointments.forEach(function(appointment, index) {
+            var listItem = document.createElement('li');
+            listItem.className = 'appointment-item';
+            listItem.innerHTML = '<strong>' + appointment.name + '</strong> - ' + appointment.datetime +
+                ' <button class="delete-button" onclick="deleteAppointment(' + index + ')">Delete</button>';
+            appointmentList.appendChild(listItem);
+        });
+    }
+
+    // Function to add a new appointment
+    function addAppointment(event) {
+        event.preventDefault();
+        var appointmentName = document.getElementById('appointmentName').value;
+        var appointmentDateTime = document.getElementById('appointmentDateTime').value;
+        var newAppointment = { name: appointmentName, datetime: appointmentDateTime };
+        appointments.push(newAppointment);
+        displayAppointments();
+        // Clear form fields after adding appointment
+        document.getElementById('appointmentName').value = '';
+        document.getElementById('appointmentDateTime').value = '';
+    }
+
+    // Function to delete an existing appointment
+    function deleteAppointment(index) {
+        appointments.splice(index, 1);
+        displayAppointments();
+    }
+
+    // Display initial appointments when the page loads
+    displayAppointments();
+</script>
+
+</body>
+</html>
