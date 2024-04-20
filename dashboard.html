@@ -1,68 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: antiquewhite;
+        }
 
-    .container {
-        display: grid;
-        grid-template-columns: 250px 1fr;
-        height: 100vh;
-    }
+        .container {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            height: 100vh;
+        }
 
-    .menu {
-        background-color: #09032e;
-        color: #fff;
-        padding: 20px;
-    }
+        .menu {
+            background: linear-gradient(180deg, #09032e, gold);
+            color: #fff;
+            padding: 20px;
+        }
 
-    .menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: auto;
+        }
 
-    .menu ul li {
-        margin-bottom: 10px;
-    }
+        .menu ul li {
+            margin-bottom: 10px;
+        }
 
-    .menu ul li a {
-        color: #fff;
-        text-decoration: none;
-        display: block;
-        padding: 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
+        .menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
 
-    .menu ul li a:hover {
-        background-color: gold;
-    }
+        .menu ul li a:hover {
+            background-color: gold;
+        }
 
-    .submenu {
-        display: none;
-        padding-left: 20px;
-    }
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
 
-    .submenu ul li a {
-        padding: 5px 10px;
-    }
+        .submenu ul li a {
+            padding: 5px 10px;
+        }
 
-    .submenu.active {
-        display: block;
-    }
+        .submenu.active {
+            display: block;
+        }
 
-    .content {
-        padding: 20px;
-    }
-</style>
+        .content {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -73,7 +74,7 @@
                 <div id="dashboardSubMenu" class="submenu">
                     <ul>
                         <li><a href="#" onclick="showDashboardContent('My Appointment')">My Appointment</a></li>
-                        <li><a href="#" onclick="showDashboardContent('Schedule an Appointment')">Schedule an Appointment</a></li>
+                        <li><a href="#" onclick="showDashboardContent('Add New Appointment')">Schedule an Appointment</a></li>
                     </ul>
                 </div>
             </li>
@@ -89,6 +90,9 @@
 </div>
 
 <script>
+    var appointments = [
+    ];
+
     function toggleSubMenu(menuId) {
         var submenu = document.getElementById(menuId + 'SubMenu');
         submenu.classList.toggle('active');
@@ -96,16 +100,60 @@
 
     function showDashboardContent(content) {
         var contentDiv = document.querySelector('.content');
-        contentDiv.innerHTML = '<h1>Welcome to Dashboard</h1><p>' + content + '</p>';
+        if (content === 'My Appointment') {
+            contentDiv.innerHTML = '<h1>Welcome to Dashboard</h1><h2>My Appointments</h2><ul id="appointmentList"></ul>';
+            displayAppointments();
+        } else if (content === 'Add New Appointment') {
+            contentDiv.innerHTML = `
+                <h1>Welcome to Dashboard</h1>
+                <h2>Add New Appointment</h2>
+                <form onsubmit="addAppointment(event)">
+                    <div class="form-group">
+                        <label for="appointmentName">Appointment Name:</label>
+                        <input type="text" id="appointmentName" name="appointmentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentDateTime">Appointment Date and Time:</label>
+                        <input type="datetime-local" id="appointmentDateTime" name="appointmentDateTime" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add Appointment">
+                    </div>
+                </form>
+            `;
+        }
     }
 
     function showContent(content) {
         var contentDiv = document.querySelector('.content');
         contentDiv.innerHTML = '<h1>Welcome to ' + content + '</h1>';
     }
+
     function loadProfilePage() {
         document.getElementById("profileFrame").src = "profile.html";
-        event.preventDefault(); // Prevent the default behavior of the link
+        event.preventDefault();
+    }
+
+    function displayAppointments() {
+        var appointmentList = document.getElementById('appointmentList');
+        appointmentList.innerHTML = '';
+        appointments.forEach(function(appointment, index) {
+            var listItem = document.createElement('li');
+            listItem.innerHTML = '<strong>' + appointment.name + '</strong> - ' + appointment.datetime;
+            appointmentList.appendChild(listItem);
+        });
+    }
+
+    function addAppointment(event) {
+        event.preventDefault();
+        var appointmentName = document.getElementById('appointmentName').value;
+        var appointmentDateTime = document.getElementById('appointmentDateTime').value;
+        
+        appointments.push({ name: appointmentName, datetime: appointmentDateTime });
+        
+        displayAppointments();
+        
+        alert('Appointment added: ' + appointmentName + ' - ' + appointmentDateTime);
     }
 </script>
 
