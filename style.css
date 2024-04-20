@@ -34,7 +34,7 @@ nav a:hover {
 }
 section {
     padding: 20px;
-    margin: 20px;
+    margin: 40px auto;
     background-color: #fff;
     border-radius: 5px;
 }
